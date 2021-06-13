@@ -15,7 +15,7 @@ public class LoggingItemWriter implements ItemWriter<MclClientNew>{
 		// TODO Auto-generated method stub
 		
 		for(MclClientNew cl:list) {
-			System.out.println(cl.getMcl_first());
+			System.out.println(cl.getMcl_first() +" "+cl.getMcl_id());
 		}
 		 LOGGER.info("Writing size: {} list = {}", list.size(),list);
 

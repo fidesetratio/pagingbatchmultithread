@@ -153,7 +153,7 @@ public class MultiThreadPaging implements CommandLineRunner {
 		return stepBuilderFactory.get("step1")
 				.partitioner(slaveStep().getName(), partitioner())
 				.step(slaveStep())
-				.gridSize(4)
+				.gridSize(8)
 				.taskExecutor(new SimpleAsyncTaskExecutor())
 				.build();
 	}
@@ -163,7 +163,7 @@ public class MultiThreadPaging implements CommandLineRunner {
 		{
 			return stepBuilderFactory.get("slaveStep")
 					.<MclClientNew, MclClientNew>chunk(1000)
-					.reader(pagingItemReader(null, null))
+					.reader(pagingItemReader(null, null)).processor(processor())
 					.writer(customerItemWriter())
 					.listener(new CustomChunkListener())
 					.build();
@@ -177,7 +177,12 @@ public class MultiThreadPaging implements CommandLineRunner {
 					.start(step1())
 					.build();
 		}
-
+		
+		@Bean 
+		public SimpleProcessor processor()
+		{
+			return new SimpleProcessor();
+		}
 		
 		@Bean
 		@StepScope
